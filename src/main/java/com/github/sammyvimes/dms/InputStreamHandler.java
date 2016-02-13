@@ -3,10 +3,7 @@ package com.github.sammyvimes.dms;
 import com.sun.istack.internal.NotNull;
 import com.sun.istack.internal.Nullable;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * Created by Semyon on 13.02.2016.
@@ -37,9 +34,12 @@ public class InputStreamHandler extends Thread {
                         callback.onInput(line);
                     }
                 }
+                Thread.sleep(150);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            stream.close();
+        } catch (IOException | InterruptedException e) {
+            System.err.println("Error occured while reading stdout: ");
+            e.printStackTrace(new PrintStream(System.err));
         }
     }
 
